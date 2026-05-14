@@ -1,0 +1,22 @@
+.recherche {
+  margin-bottom: 20px;
+}
+
+.recherche-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid #dcdde1;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.recherche-input:focus {
+  border-color: #0a6e31;
+}
+
+.recherche-input::placeholder {
+  color: #b2bec3;
+}
