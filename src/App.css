@@ -31,3 +31,26 @@
     font-size: 1rem;
     margin-right: 12px;
   }
+
+  .message-chargement {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  margin-top: 40px;
+}
+
+.message-erreur {
+  text-align: center;
+  background-color: #fff5f5;
+  border: 2px solid #e74c3c;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 20px;
+  color: #2c3e50;
+}
+
+.erreur-detail {
+  color: #e74c3c;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
