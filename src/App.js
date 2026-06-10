@@ -5,22 +5,23 @@ import Recherche from './Recherche';
 import LigneBus from './LigneBus';
 import DetailLigne from './DetailLigne';
 import Footer from './Footer';
-
+import Carte from './Carte';
 function App() {
-// 1. Trois états
+  // 1. Trois états
   const [lignes, setLignes] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
   const [recherche, setRecherche] = useState("");
   const [ligneSelectionnee, setLigneSelectionnee] = useState(null);
+  const [chargementDetail, setChargementDetail] = useState(false);
   // 2. Charger les données au démarrage
-  useEffect(() => {
+  function chargerLignes() {
+    setChargement(true);
+    setErreur(null);
     fetch("http://localhost:5000/lignes")
       .then((response) => {
         if (!response.ok) {
-          throw new Error(
-            "Erreur serveur : " + response.status
-          );
+          throw new Error("Erreur serveur : " + response.status);
         }
         return response.json();
       })
@@ -32,6 +33,10 @@ function App() {
         setErreur(error.message);
         setChargement(false);
       });
+  }
+
+  useEffect(() => {
+    chargerLignes();
   }, []);
 
   const lignesFiltrees = lignes.filter(
@@ -45,18 +50,34 @@ function App() {
       l.numero.includes(recherche)
   );
 
+  // Remplace l'ancienne fonction handleClickLigne par celle-ci :
+
   function handleClickLigne(ligne) {
-    if (
-      ligneSelectionnee &&
-      ligneSelectionnee.id === ligne.id
-    ) {
+    if (ligneSelectionnee && ligneSelectionnee.id === ligne.id) {
       setLigneSelectionnee(null);
-    } else {
-      setLigneSelectionnee(ligne);
+      return;
     }
+
+    setChargementDetail(true);
+
+    fetch(`http://localhost:5000/lignes/${ligne.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erreur serveur : " + response.status);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLigneSelectionnee(data);
+        setChargementDetail(false);
+      })
+      .catch((error) => {
+        console.error("Erreur chargement détail :", error.message);
+        setChargementDetail(false);
+      });
   }
 
-// Écran affiché pendant le chargement
+  // Écran affiché pendant le chargement
   if (chargement) {
     return (
       <div className="App">
@@ -94,6 +115,13 @@ function App() {
           onChange={setRecherche}
         />
 
+        <button
+          className="btn-recharger"
+          onClick={chargerLignes}
+        >
+          Recharger les lignes
+        </button>
+
         <p className="resultat-recherche">
           {lignesFiltrees.length} ligne
           {lignesFiltrees.length > 1 ? 's' : ''} trouvée
@@ -115,9 +143,15 @@ function App() {
           />
         ))}
 
-        {ligneSelectionnee && (
+        {chargementDetail && (
+          <p className="message-chargement">Chargement du détail...</p>
+        )}
+
+        {ligneSelectionnee && !chargementDetail && (
           <DetailLigne ligne={ligneSelectionnee} />
         )}
+
+        <Carte />
       </main>
 
       <Footer />

@@ -1,0 +1,29 @@
+.carte-container {
+  margin-top: 24px;
+}
+.carte-titre {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+.carte {
+  height: 400px;
+  width: 100%;
+  border-radius: 8px;
+  border: 2px solid #dcdde1;
+}
+
+.arret-proche {
+  color: #0a6e31;
+  font-size: 0.95rem;
+  margin: 0 0 12px 0;
+  padding: 8px 12px;
+  background-color: #e8f5e9;
+  border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  .carte {
+    height: 300px;
+  }
+}

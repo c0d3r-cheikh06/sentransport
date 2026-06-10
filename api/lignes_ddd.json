@@ -92,5 +92,35 @@
       "HLM",
       "Sandaga"
     ]
+  },
+  {
+    "id": 7,
+    "numero": "26",
+    "depart": "Yoff",
+    "arrivee": "Gare Routiere",
+    "arrets": 20,
+    "listeArrets": [
+      "Yoff Village",
+      "Ouest Foire",
+      "Liberte 6",
+      "Castor",
+      "Colobane",
+      "Gare Routiere"
+    ]
+  },
+  {
+    "id": 8,
+    "numero": "42",
+    "depart": "Thiaroye",
+    "arrivee": "Plateau",
+    "arrets": 25,
+    "listeArrets": [
+      "Thiaroye Gare",
+      "Yeumbeul",
+      "Keur Massar",
+      "Pikine",
+      "Hann",
+      "Plateau"
+    ]
   }
 ]

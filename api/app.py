@@ -4,21 +4,26 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-
-# Charger les donnees depuis le fichier JSON
-with open("lignes_ddd.json", "r") as f:
+# Charger les données depuis les fichiers JSON
+with open("lignes_ddd.json", "r", encoding="utf-8") as f:
     lignes = json.load(f)
+
+with open("arrets.json", "r", encoding="utf-8") as f:
+    arrets = json.load(f)
+
 
 @app.route("/")
 def accueil():
     return jsonify({
         "message": "Bienvenue sur l'API SenTransport !",
-        "endpoints": ["/lignes", "/lignes/<id>"]
+        "endpoints": ["/lignes", "/lignes/<id>", "/arrets"]
     })
+
 
 @app.route("/lignes")
 def get_lignes():
     return jsonify(lignes)
+
 
 @app.route("/lignes/<int:ligne_id>")
 def get_ligne(ligne_id):
@@ -30,19 +35,15 @@ def get_ligne(ligne_id):
 
     if ligne is None:
         return jsonify({
-            "erreur": "Ligne non trouvee"
+            "erreur": "Ligne non trouvée"
         }), 404
 
     return jsonify(ligne)
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
-
 @app.route("/arrets")
 def get_arrets():
-    tous_les_arrets = set()
-    for ligne in lignes:
-        for arret in ligne["listeArrets"]:
-            tous_les_arrets.add(arret)
-    return jsonify(list(tous_les_arrets))
+    return jsonify(arrets)
 
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
