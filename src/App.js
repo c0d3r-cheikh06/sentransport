@@ -6,6 +6,9 @@ import LigneBus from './LigneBus';
 import DetailLigne from './DetailLigne';
 import Footer from './Footer';
 import Carte from './Carte';
+import Meteo from './Meteo';
+import SignalerIncident from './SignalerIncident';
+
 function App() {
   // 1. Trois états
   const [lignes, setLignes] = useState([]);
@@ -108,8 +111,8 @@ function App() {
   return (
     <div className="App">
       <Header />
-
       <main className="contenu">
+        <Meteo />
         <Recherche
           valeur={recherche}
           onChange={setRecherche}
@@ -152,6 +155,7 @@ function App() {
         )}
 
         <Carte />
+        <SignalerIncident />
       </main>
 
       <Footer />
